@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>anime tracker</title>
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #101827;
+            color: white;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #42b5f5;
+        }
+
+        input {
+            padding: 12px;
+            width: 250px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            padding: 12px 18px;
+            margin-left: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #42b5f5;
+            color: white;
+            cursor: pointer;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        #count {
+            font-size: 25px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>My Anime Movies</h1>
+
+    <p id="count">Total Movies: 0</p>
+
+    <input type="text" id="movieName" placeholder="Enter movie name">
+
+    <button onclick="addMovie()">Add Movie</button>
+
+    <button onclick="clearMovies()">Clear All</button>
+
+    <h2>Movies Watched</h2>
+
+    <ol id="movieList"></ol>
+
+
+    <script>
+
+        // Get saved movies
+        let movies = JSON.parse(localStorage.getItem("myMovies")) || [];
+
+
+        // Display movies when page opens
+        displayMovies();
+
+
+        function addMovie() {
+
+            let movie = document.getElementById("movieName").value.trim();
+
+            if (movie === "") {
+                alert("Please enter a movie name.");
+                return;
+            }
+
+            // Add movie to array
+            movies.push(movie);
+
+            // Save array in browser
+            localStorage.setItem("myMovies", JSON.stringify(movies));
+
+            // Clear input
+            document.getElementById("movieName").value = "";
+
+            // Update list
+            displayMovies();
+        }
+
+
+        function displayMovies() {
+
+            let list = document.getElementById("movieList");
+
+            list.innerHTML = "";
+
+            movies.forEach(function(movie) {
+
+                let li = document.createElement("li");
+
+                li.textContent = movie;
+
+                list.appendChild(li);
+
+            });
+
+
+            // Update total
+            document.getElementById("count").textContent =
+                "Total Movies: " + movies.length;
+        }
+
+
+        function clearMovies() {
+
+            if (confirm("Are you sure you want to delete all movies?")) {
+
+                movies = [];
+
+                localStorage.removeItem("myMovies");
+
+                displayMovies();
+            }
+        }
+
+    </script>
+    
+    <script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+}
+</script>
+    
+
+</body>
+</html>
