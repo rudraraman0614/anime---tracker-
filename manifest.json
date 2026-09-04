@@ -1,0 +1,9 @@
+{
+  "name": "My Anime Tracker",
+  "short_name": "Anime Tracker",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#101827",
+  "theme_color": "#42b5f5",
+  "icons": []
+}
