@@ -1,665 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Anime Tracker</title>
-
-    <link rel="manifest" href="manifest.json">
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #0b1628;
-            color: #f0f3f8;
-            min-height: 100vh;
-        }
-
-        /* HEADER */
-
-        header {
-            height: 65px;
-            background: #152238;
-            display: flex;
-            align-items: center;
-            padding: 0 25px;
-            border-bottom: 1px solid #26364e;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .logo {
-            color: #3db4f2;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .nav {
-            margin-left: auto;
-            display: flex;
-            gap: 25px;
-        }
-
-        .nav span {
-            color: #9aa8bd;
-            cursor: pointer;
-        }
-
-        .nav span:hover {
-            color: #3db4f2;
-        }
-
-
-        /* MAIN */
-
-        .container {
-            max-width: 1050px;
-            margin: auto;
-            padding: 35px 20px;
-        }
-
-
-        /* PROFILE */
-
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 35px;
-        }
-
-        .avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: #3db4f2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-        }
-
-        .profile h1 {
-            font-size: 26px;
-        }
-
-        .profile p {
-            color: #8e9bb0;
-            margin-top: 5px;
-        }
-
-
-        /* STATISTICS */
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 35px;
-        }
-
-        .stat {
-            background: #152238;
-            border-radius: 8px;
-            padding: 22px;
-            border: 1px solid #22334b;
-        }
-
-        .stat-title {
-            color: #8e9bb0;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .stat-number {
-            color: #3db4f2;
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-
-        /* CONTENT */
-
-        .section {
-            background: #111d30;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #22334b;
-        }
-
-        .section-header {
-            padding: 20px;
-            border-bottom: 1px solid #26364e;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .section-header h2 {
-            font-size: 20px;
-        }
-
-
-        /* INPUT */
-
-        .add-area {
-            padding: 20px;
-            display: flex;
-            gap: 10px;
-            background: #152238;
-        }
-
-        input {
-            flex: 1;
-            padding: 13px 15px;
-            border: none;
-            outline: none;
-            border-radius: 6px;
-            background: #0d1829;
-            color: white;
-            font-size: 15px;
-            border: 1px solid #26364e;
-        }
-
-        input:focus {
-            border-color: #3db4f2;
-        }
-
-        button {
-            border: none;
-            border-radius: 6px;
-            padding: 12px 18px;
-            background: #3db4f2;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        .clear {
-            background: #26364e;
-        }
-
-
-        /* SEARCH */
-
-        .search {
-            padding: 15px 20px;
-            background: #111d30;
-        }
-
-        .search input {
-            width: 100%;
-        }
-
-
-        /* MOVIE LIST */
-
-        #movieList {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .movie {
-            display: flex;
-            align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid #223047;
-            transition: background 0.2s;
-        }
-
-        .movie:hover {
-            background: #18263c;
-        }
-
-        .movie-number {
-            width: 35px;
-            color: #6f7f96;
-        }
-
-        .movie-name {
-            flex: 1;
-            font-size: 16px;
-        }
-
-        .delete {
-            background: transparent;
-            color: #78869a;
-            padding: 5px 10px;
-            font-size: 18px;
-        }
-
-        .delete:hover {
-            color: #ff6680;
-        }
-
-
-        /* EMPTY */
-
-        .empty {
-            padding: 50px 20px;
-            text-align: center;
-            color: #718097;
-        }
-
-
-        /* MOBILE */
-
-        @media (max-width: 600px) {
-
-            header {
-                padding: 0 15px;
-            }
-
-            .nav {
-                gap: 12px;
-            }
-
-            .nav span {
-                display: none;
-            }
-
-            .container {
-                padding: 25px 12px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .add-area {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-            }
-
-            .profile h1 {
-                font-size: 22px;
-            }
-
-            .avatar {
-                width: 60px;
-                height: 60px;
-            }
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Anime List</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f1117;
+    color: white;
+}
+
+/* Header */
+header {
+    background: #151820;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #292d38;
+}
+
+header h1 {
+    margin: 0 0 15px;
+}
+
+/* Search */
+#search {
+    width: 90%;
+    max-width: 600px;
+    padding: 13px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+/* Add section */
+.add-section {
+    max-width: 600px;
+    margin: 25px auto;
+    padding: 20px;
+    background: #181b24;
+    border-radius: 10px;
+}
+
+.add-section h2 {
+    margin-top: 0;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 6px;
+    background: #252936;
+    color: white;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #3db4f2;
+    color: white;
+    font-weight: bold;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+/* Anime grid */
+#animeList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Anime card */
+.anime-card {
+    background: #181b24;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #292d38;
+}
+
+.anime-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.anime-info {
+    padding: 15px;
+}
+
+.anime-info h3 {
+    margin-top: 0;
+}
+
+.rating {
+    color: #ffd166;
+    font-weight: bold;
+}
+
+.description {
+    color: #b8bcc8;
+    line-height: 1.5;
+}
+
+.delete-btn {
+    background: #e5484d;
+    margin-top: 8px;
+}
+
+.edit-btn {
+    background: #555b6e;
+    margin-top: 8px;
+}
+</style>
 </head>
-
 
 <body>
 
-
 <header>
+    <h1>My Anime List</h1>
 
-    <div class="logo">
-        Anime Tracker
-    </div>
-
-    <div class="nav">
-        <span>Home</span>
-        <span>Anime</span>
-        <span>Movies</span>
-    </div>
-
+    <input
+        type="text"
+        id="search"
+        placeholder="Search anime..."
+        onkeyup="searchAnime()"
+    >
 </header>
 
 
-<div class="container">
+<!-- Add Anime -->
+<section class="add-section">
+
+    <h2>Add Anime</h2>
+
+    <input
+        type="text"
+        id="animeName"
+        placeholder="Anime name"
+    >
+
+    <input
+        type="number"
+        id="animeRating"
+        placeholder="Rating (1-10)"
+        min="1"
+        max="10"
+    >
+
+    <input
+        type="text"
+        id="animeImage"
+        placeholder="Image URL"
+    >
+
+    <textarea
+        id="animeDescription"
+        placeholder="Your description..."
+    ></textarea>
+
+    <button onclick="addAnime()">Add Anime</button>
+
+</section>
 
 
-    <!-- PROFILE -->
-
-    <div class="profile">
-
-        <div class="avatar">
-            🎬
-        </div>
-
-        <div>
-            <h1>My Anime List</h1>
-            <p>Personal anime & movie tracker</p>
-        </div>
-
-    </div>
-
-
-    <!-- STATISTICS -->
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <div class="stat-title">
-                MOVIES WATCHED
-            </div>
-
-            <div class="stat-number" id="count">
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-title">
-                COMPLETED
-            </div>
-
-            <div class="stat-number" id="completed">
-                0
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-title">
-                LIST STATUS
-            </div>
-
-            <div class="stat-number">
-                Active
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- MOVIE SECTION -->
-
-    <div class="section">
-
-
-        <div class="section-header">
-
-            <h2>
-                Movies
-            </h2>
-
-        </div>
-
-
-        <!-- ADD -->
-
-        <div class="add-area">
-
-            <input
-                type="text"
-                id="movieName"
-                placeholder="Add a movie..."
-            >
-
-            <button onclick="addMovie()">
-                + Add
-            </button>
-
-            <button
-                class="clear"
-                onclick="clearMovies()"
-            >
-                Clear
-            </button>
-
-        </div>
-
-
-        <!-- SEARCH -->
-
-        <div class="search">
-
-            <input
-                type="text"
-                id="search"
-                placeholder="Search your movies..."
-                oninput="searchMovies()"
-            >
-
-        </div>
-
-
-        <!-- LIST -->
-
-        <div id="movieList"></div>
-
-
-    </div>
-
-</div>
+<!-- Anime cards -->
+<div id="animeList"></div>
 
 
 <script>
 
-    /* LOAD SAVED MOVIES */
-
-    let movies =
-        JSON.parse(localStorage.getItem("myMovies")) || [];
+/* Load saved anime */
+let animeList = JSON.parse(localStorage.getItem("animeList")) || [];
 
 
-    /* ADD MOVIE */
+/* Display anime */
+function displayAnime(list = animeList) {
 
-    function addMovie() {
+    const container = document.getElementById("animeList");
 
-        let input =
-            document.getElementById("movieName");
+    container.innerHTML = "";
 
-        let movie =
-            input.value.trim();
+    list.forEach((anime, index) => {
 
+        container.innerHTML += `
 
-        if (movie === "") {
+        <div class="anime-card">
 
-            alert("Please enter a movie name.");
+            <img
+                src="${anime.image}"
+                onerror="this.src='https://via.placeholder.com/300x400?text=No+Image'"
+            >
 
-            return;
-        }
+            <div class="anime-info">
 
+                <h3>${anime.name}</h3>
 
-        movies.push(movie);
+                <p class="rating">
+                    ⭐ ${anime.rating}/10
+                </p>
 
-
-        localStorage.setItem(
-            "myMovies",
-            JSON.stringify(movies)
-        );
-
-
-        input.value = "";
-
-
-        displayMovies();
-    }
-
-
-
-    /* DISPLAY */
-
-    function displayMovies(list = movies) {
-
-        let movieList =
-            document.getElementById("movieList");
-
-
-        movieList.innerHTML = "";
-
-
-        if (list.length === 0) {
-
-            movieList.innerHTML =
-                `<div class="empty">
-                    No movies found.
-                 </div>`;
-
-        }
-
-
-        list.forEach(function(movie, index) {
-
-            let originalIndex =
-                movies.indexOf(movie);
-
-
-            let div =
-                document.createElement("div");
-
-            div.className = "movie";
-
-
-            div.innerHTML = `
-
-                <div class="movie-number">
-                    ${index + 1}
-                </div>
-
-                <div class="movie-name">
-                    ${movie}
-                </div>
+                <p class="description">
+                    ${anime.description}
+                </p>
 
                 <button
-                    class="delete"
-                    onclick="deleteMovie(${originalIndex})"
+                    class="edit-btn"
+                    onclick="editAnime(${index})"
                 >
-                    ×
+                    Edit
                 </button>
 
-            `;
+                <button
+                    class="delete-btn"
+                    onclick="deleteAnime(${index})"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+    });
+}
 
 
-            movieList.appendChild(div);
+/* Add anime */
+function addAnime() {
 
-        });
+    const name = document.getElementById("animeName").value;
+    const rating = document.getElementById("animeRating").value;
+    const image = document.getElementById("animeImage").value;
+    const description =
+        document.getElementById("animeDescription").value;
 
+    if (!name || !rating || !description) {
 
-        updateStats();
+        alert("Please fill in the required fields.");
+
+        return;
     }
 
+    const anime = {
+
+        name: name,
+
+        rating: rating,
+
+        image: image ||
+        "https://via.placeholder.com/300x400?text=No+Image",
+
+        description: description
+    };
+
+    animeList.push(anime);
+
+    saveAnime();
+
+    clearForm();
+
+    displayAnime();
+}
 
 
-    /* DELETE */
+/* Search */
+function searchAnime() {
 
-    function deleteMovie(index) {
+    const search =
+        document.getElementById("search").value.toLowerCase();
 
-        movies.splice(index, 1);
-
-
-        localStorage.setItem(
-            "myMovies",
-            JSON.stringify(movies)
+    const filtered =
+        animeList.filter(anime =>
+            anime.name.toLowerCase().includes(search)
         );
 
+    displayAnime(filtered);
+}
 
-        displayMovies();
+
+/* Delete */
+function deleteAnime(index) {
+
+    if (confirm("Delete this anime?")) {
+
+        animeList.splice(index, 1);
+
+        saveAnime();
+
+        displayAnime();
     }
+}
 
 
+/* Edit */
+function editAnime(index) {
 
-    /* SEARCH */
+    const anime = animeList[index];
 
-    function searchMovies() {
+    document.getElementById("animeName").value =
+        anime.name;
 
-        let search =
-            document
-            .getElementById("search")
-            .value
-            .toLowerCase();
+    document.getElementById("animeRating").value =
+        anime.rating;
 
+    document.getElementById("animeImage").value =
+        anime.image;
 
-        let filtered =
-            movies.filter(function(movie) {
+    document.getElementById("animeDescription").value =
+        anime.description;
 
-                return movie
-                    .toLowerCase()
-                    .includes(search);
+    animeList.splice(index, 1);
 
-            });
+    saveAnime();
 
+    displayAnime();
 
-        displayMovies(filtered);
-    }
-
-
-
-    /* CLEAR */
-
-    function clearMovies() {
-
-        if (
-            confirm(
-                "Delete all your movies?"
-            )
-        ) {
-
-            movies = [];
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
 
-            localStorage.removeItem(
-                "myMovies"
-            );
+/* Save */
+function saveAnime() {
+
+    localStorage.setItem(
+        "animeList",
+        JSON.stringify(animeList)
+    );
+}
 
 
-            displayMovies();
+/* Clear form */
+function clearForm() {
 
-        }
+    document.getElementById("animeName").value = "";
 
-    }
+    document.getElementById("animeRating").value = "";
 
+    document.getElementById("animeImage").value = "";
 
-
-    /* STATISTICS */
-
-    function updateStats() {
-
-        document
-            .getElementById("count")
-            .textContent =
-            movies.length;
+    document.getElementById("animeDescription").value = "";
+}
 
 
-        document
-            .getElementById("completed")
-            .textContent =
-            movies.length;
-
-    }
-
-
-
-    /* INITIAL LOAD */
-
-    displayMovies();
-
-
-
-    /* SERVICE WORKER */
-
-    if ("serviceWorker" in navigator) {
-
-        navigator.serviceWorker.register("sw.js");
-
-    }
+/* Initial display */
+displayAnime();
 
 </script>
 
-
 </body>
-
 </html>
